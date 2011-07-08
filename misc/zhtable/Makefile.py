@@ -369,10 +369,41 @@ $zh2Hant = array(\n'''
         +  '\n);\n\n$zh2SG = array(\n' \
         +  PHPArray( toSG ) \
         +  '\n);'
-    
+
     f = open( 'ZhConversion.php', 'wb', encoding = 'utf8' )
     print ('Writing ZhConversion.php ... ')
     f.write( php )
+    f.close()
+    
+    ruby = '''# encoding: utf-8
+
+# Simplified / Traditional Chinese conversion tables
+# 
+# Automatically generated using code and data in misc/zhtable/
+# Do not modify directly!
+ 
+if RUBY_VERSION < '1.9'
+  $KCODE = 'U'
+  require 'jcode'
+end
+
+ZH2TRADITIONAL = {\n'''
+    ruby += PHPArray( toHant ) \
+         +  '\n}\n\nZH2SIMPLIFIED = {\n' \
+         +  PHPArray( toHans ) \
+         +  '\n}\n\nZH2TW = {\n' \
+         +  PHPArray( toTW ) \
+         +  '\n}\n\nZH2HK = {\n' \
+         +  PHPArray( toHK ) \
+         +  '\n}\n\nZH2CN = {\n' \
+         +  PHPArray( toCN ) \
+         +  '\n}\n\nZH2SG = {\n' \
+         +  PHPArray( toSG ) \
+         +  '\n}'
+
+    f = open( 'zh_conversion.rb', 'wb', encoding = 'utf8' )
+    print ('Writing zh_conversion.rb ... ')
+    f.write( ruby )
     f.close()
     
     #Remove temp files
@@ -383,7 +414,6 @@ $zh2Hant = array(\n'''
     os.remove('Unihan_Variants.txt')
     os.remove('Wubi.txt.in')
     os.remove('Ziranma.txt.in')
-    
 
 if __name__ == '__main__':
     main()
