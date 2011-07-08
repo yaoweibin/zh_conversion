@@ -1,0 +1,6 @@
+*.swp
+*.[oa]
+Makefile
+cscope*
+objs
+.svn
