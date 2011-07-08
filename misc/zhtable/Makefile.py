@@ -256,6 +256,10 @@ def PHPArray( table ):
     lines = ['\'%s\' => \'%s\',' % (f, t) for (f, t) in table if f and t]
     return '\n'.join(lines)
 
+def PHPArray_single_word( table ):
+    lines = ['\'%s\' => \'%s\',' % (f, t) for (f, t) in table if f and t and (len(f) == 1)]
+    return '\n'.join(lines)
+
 def main():
     #Get Unihan.zip:
     url  = 'http://www.unicode.org/Public/UNIDATA/Unihan.zip'
@@ -391,6 +395,8 @@ ZH2TRADITIONAL = {\n'''
     ruby += PHPArray( toHant ) \
          +  '\n}\n\nZH2SIMPLIFIED = {\n' \
          +  PHPArray( toHans ) \
+         +  '\n}\n\nZH2SIMPLIFIED_SINGLE_WORD = {\n' \
+         +  PHPArray_single_word( toHans ) \
          +  '\n}\n\nZH2TW = {\n' \
          +  PHPArray( toTW ) \
          +  '\n}\n\nZH2HK = {\n' \
